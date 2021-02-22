@@ -5,6 +5,8 @@ import AddTask from './components/AddTask'
 import { useState } from 'react'
 
 const App = () => {
+  const [showAddTask, setShowAddTask] = useState(false)
+
   // move tasks to glbal state to handle it at the app level and send it around
   const [tasks, setTasks] = useState([
     {
@@ -44,10 +46,18 @@ const App = () => {
     setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder} : task))
   }
 
+  // Toggle Show Add Tasks
+  const toggleShowAddTasks = () => setShowAddTask(!showAddTask)
+
   return (
     <div className='container'>
-      <Header />
-      <AddTask onAdd={ addTask }/>
+      <Header
+        onAdd={ toggleShowAddTasks }
+        showAdd={showAddTask}
+      />
+
+      {showAddTask && <AddTask onAdd={ addTask } />}
+
       {
         tasks.length > 0 ?
         <Tasks
