@@ -1,10 +1,22 @@
-//es7 prop types: read more about this vs typescript
-const Task = ({ task }) => {
+import { FaTimes } from 'react-icons/fa'
+
+const Task = ({ task, onDelete, onToggle }) => {
   return (
-    <div className='task'>
-      <h3>{task.text}</h3>
+    <div
+      className={`
+        task
+        ${task.reminder ? 'reminder' : ''}
+      `}
+      onDoubleClick={ () => onToggle(task.id) }
+    >
+      <h3>
+        {task.text}
+        <FaTimes
+          style={{ color: 'red', cursor: 'pointer' }}
+          onClick={ () => onDelete(task.id) } // state gets passed down actions get passed up
+        />
+      </h3>
       <p>{task.day}</p>
-      <p>{task.reminder}</p>
     </div>
   )
 }
